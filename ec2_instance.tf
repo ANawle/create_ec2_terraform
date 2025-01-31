@@ -1,14 +1,12 @@
-  provider "aws" {
-  region     = "ap-south-1"
-  access_key = "AKIA6ODU37ZLXUF2YMDN"
-  secret_key = "WEqmYaJb/kab0EZfYwJqE+xspFau+XK0s7IteZQ6"
+provider "aws" {
+  region = "us-east-1"  # Adjust your region
 }
 
-resource "aws_instance" "my_instance1" {
-  ami           = "ami-00bb6a80f01f03502"  # Replace with your preferred AMI
+resource "aws_instance" "my_instance" {
+  ami           = "ami-0c614dee691cbbf37"  # Replace with your preferred AMI
   instance_type = "t2.micro"
 
   tags = {
-    Name = "Avi_instance"
+    Name = "Avinash"
   }
 }
