@@ -17,10 +17,6 @@ resource "aws_db_instance" "my_rds_instance" {
   auto_minor_version_upgrade = true  # ✅ Correct Placement
 }
 
-
-
-
-
   # Database Credentials
   username = "admin_user"  # The master username for the DB
   password = "Avinash"  # The master password for the DB
