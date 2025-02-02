@@ -18,7 +18,7 @@ resource "aws_db_instance" "my_rds_instance" {
 
   # Backup and Maintenance Settings
   backup_retention_period = 7  # Number of days to retain backups
-  preferred_backup_window = "07:00-09:00"  # Time window for backups
+  maintenance_window = "Sun:23:45-Sun:24:15"  # Time window for maintenance (example)
 
   # Networking
   multi_az               = false  # Set to true for multi-AZ deployment
@@ -46,4 +46,3 @@ resource "aws_db_instance" "my_rds_instance" {
 output "rds_endpoint" {
   value = aws_db_instance.my_rds_instance.endpoint
 }
-
