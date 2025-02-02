@@ -14,8 +14,8 @@ resource "aws_instance" "my_instance" {
     create_before_destroy = true
   }
 
-  # Provisioner to stop the instance after creation
+  # Provisioner to terminate the instance after creation
   provisioner "local-exec" {
-    command = "aws ec2 stop-instances --instance-ids ${self.id} --region ap-south-1"
+    command = "aws ec2 terminate-instances --instance-ids ${self.id} --region ap-south-1"
   }
 }
