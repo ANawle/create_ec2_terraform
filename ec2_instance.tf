@@ -1,24 +1,26 @@
+# Provider Configuration
 provider "aws" {
-  region = "ap-south-1"  # Adjust your region
+  region = "ap-south-1"  # Replace with your region
 }
 
-resource "aws_instance" "my_instance" {
-  ami           = "ami-00bb6a80f01f03502"  # Replace with your preferred AMI
-  instance_type = "t2.micro"
+# S3 Bucket Resource
+resource "aws_s3_bucket" "my_bucket" {
+  bucket = "avibkt"  # Make sure this name is globally unique
+  acl    = "public-read"  # Adjust ACL as needed (private, public-read, etc.)
 
+  # Optional: Enable versioning
+  versioning {
+    enabled = true
+  }
+
+  # Tags for the bucket
   tags = {
-    Name = "Avi"
-  }
-
-  lifecycle {
-    create_before_destroy = true
+    Name        = "MyS3Bucket"
+    Environment = "dev"
   }
 }
 
-resource "null_resource" "terminate_instance" {
-  depends_on = [aws_instance.my_instance]
-
-  provisioner "local-exec" {
-    command = "aws ec2 terminate-instances --instance-ids ${aws_instance.my_instance.id} --region ap-south-1"
-  }
+# Optional: Output the bucket name
+output "s3_bucket_name" {
+  value = aws_s3_bucket.my_bucket.bucket
 }
