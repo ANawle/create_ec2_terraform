@@ -5,16 +5,18 @@ provider "aws" {
 
 # RDS Instance Configuration
 resource "aws_db_instance" "my_rds_instance" {
-  allocated_storage    = 20
-  engine              = "mysql"
-  engine_version      = "8.0.40"
-  instance_class      = "db.t3.micro"  # Required argument
-  identifier         = "my-rds-instance"
-  username           = "admin"
-  password           = "Avinash"
-  publicly_accessible = true
-  skip_final_snapshot = true
+  allocated_storage         = 20
+  engine                   = "mysql"
+  engine_version           = "8.0.40"
+  instance_class           = "db.t3.micro"
+  identifier               = "my-rds-instance"
+  username                 = "admin"
+  password                 = "Avinash"
+  publicly_accessible      = true
+  skip_final_snapshot      = true
+  auto_minor_version_upgrade = true  # ✅ Correct Placement
 }
+
 
 
 
