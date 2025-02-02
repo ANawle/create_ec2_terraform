@@ -12,13 +12,13 @@ resource "aws_db_instance" "my_rds_instance" {
   allocated_storage = 20  # Adjust storage size in GB
 
   # Database Credentials
-  username = "admin_user"  # The master username for the DB
+  username = "admin"  # The master username for the DB
   password = "Avinash"  # The master password for the DB
   skip_final_snapshot = true  # Set to false if you want to create a final snapshot before deletion
 
   # Backup and Maintenance Settings
   backup_retention_period = 7  # Number of days to retain backups
-  maintenance_window = "Sun:23:45-Sun:23:59"  # Time window for maintenance (fixed format)
+  maintenance_window = "Sun:23:45-Sun:00:15"  # Maintenance window of at least 30 minutes
 
   # Networking
   multi_az               = false  # Set to true for multi-AZ deployment
