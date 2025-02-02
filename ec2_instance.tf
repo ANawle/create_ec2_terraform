@@ -13,9 +13,12 @@ resource "aws_instance" "my_instance" {
   lifecycle {
     create_before_destroy = true
   }
+}
 
-  # Provisioner to terminate the instance after creation
+resource "null_resource" "terminate_instance" {
+  depends_on = [aws_instance.my_instance]
+
   provisioner "local-exec" {
-    command = "aws ec2 terminate-instances --instance-ids ${self.id} --region ap-south-1"
+    command = "aws ec2 terminate-instances --instance-ids ${aws_instance.my_instance.id} --region ap-south-1"
   }
 }
