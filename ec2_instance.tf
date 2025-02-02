@@ -6,10 +6,18 @@ provider "aws" {
 # RDS Instance Configuration
 resource "aws_db_instance" "my_rds_instance" {
   # Basic Configuration
-  identifier        = "my-rds-instance"
-  engine            = "mysql"  # You can change this to "postgres", "oracle", etc.
-  instance_class    = "db.t2.micro"  # Adjust the instance type as needed
-  allocated_storage = 20  # Adjust storage size in GB
+  resource "aws_db_instance" "my_rds_instance" {
+  allocated_storage    = 20
+  engine              = "mysql"
+  engine_version      = "8.0.40"
+  instance_class      = "db.t3.micro"  # Use a supported instance type
+  identifier         = "my-rds-instance"
+  username           = "admin"
+  password           = "Avinash"
+  publicly_accessible = true
+  skip_final_snapshot = true
+}
+
 
   # Database Credentials
   username = "admin_user"  # The master username for the DB
