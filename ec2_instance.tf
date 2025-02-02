@@ -18,7 +18,7 @@ resource "aws_db_instance" "my_rds_instance" {
 
   # Backup and Maintenance Settings
   backup_retention_period = 7  # Number of days to retain backups
-  maintenance_window = "Sun:23:45-Sun:24:15"  # Time window for maintenance (example)
+  maintenance_window = "Sun:23:45-Sun:23:59"  # Time window for maintenance (fixed format)
 
   # Networking
   multi_az               = false  # Set to true for multi-AZ deployment
