@@ -9,6 +9,6 @@ resource "aws_instance" "my_instance" {
 
 
   tags = {
-    Name = "Avi"
+    Name = "Avinash"
   }
 }
