@@ -7,7 +7,7 @@ resource "aws_db_instance" "my_rds" {
   engine              = "mysql"
   engine_version      = "8.0.40"
   instance_class      = "db.t3.micro"
-  identifier         = "my-simple-rds"
+  identifier         = "my-simple-rds1"
   username           = "admin"    # Change to your desired username
   password           = "Avinashnawle"  # Change to a secure password
   publicly_accessible = true
