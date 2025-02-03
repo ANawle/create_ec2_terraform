@@ -1,51 +1,16 @@
-# Specify the AWS provider and region
+# Provider Configuration
 provider "aws" {
-  region = "ap-south-1"  # Change as needed
+  region = "ap-south-1"  # Replace with your region
 }
+	
+# S3 Bucket Resource with force_destroy enabled for deletion
+resource "aws_s3_bucket" "my_bucket" {
+  bucket         = "avibkt1"  # Make sure this name is globally unique
+  force_destroy  = true      # Allows deletion even if the bucket contains objects
 
-# Create an IAM user
-resource "aws_iam_user" "spacelift_user" {
-  name = "spacelift-user"
-  path = "/"
-}
-
-# (Optional) Attach a policy to the user. For example, allow read-only access.
-resource "aws_iam_user_policy" "spacelift_user_policy" {
-  name   = "spacelift-user-readonly"
-  user   = aws_iam_user.spacelift_user.name
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect   = "Allow"
-        Action   = [
-          "s3:Get*",
-          "s3:List*"
-        ]
-        Resource = "*"
-      }
-    ]
-  })
-}
-
-# Create an access key for the IAM user
-resource "aws_iam_access_key" "spacelift_user_key" {
-  user = aws_iam_user.spacelift_user.name
-}
-
-# Outputs for the created IAM user and access key credentials
-output "iam_user_name" {
-  description = "The IAM user name"
-  value       = aws_iam_user.spacelift_user.name
-}
-
-output "access_key_id" {
-  description = "Access key ID for the IAM user"
-  value       = aws_iam_access_key.spacelift_user_key.id
-}
-
-output "secret_access_key" {
-  description = "Secret access key for the IAM user (sensitive)"
-  value       = aws_iam_access_key.spacelift_user_key.secret
-  sensitive   = true
+  # Tags for the bucket
+  tags = {
+    Name        = "MyS3Bucket"
+    Environment = "dev"
+  }
 }
