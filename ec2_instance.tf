@@ -9,7 +9,7 @@ resource "aws_db_instance" "my_rds" {
   instance_class      = "db.t3.micro"
   identifier         = "my-simple-rds"
   username           = "admin"    # Change to your desired username
-  password           = "Avinash"  # Change to a secure password
+  password           = "Avinash@12345"  # Change to a secure password
   publicly_accessible = true
   skip_final_snapshot = true
 }
