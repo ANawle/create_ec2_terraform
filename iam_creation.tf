@@ -5,7 +5,7 @@ provider "aws" {
 	
 # S3 Bucket Resource with force_destroy enabled for deletion
 resource "aws_s3_bucket" "my_bucket" {
-  bucket         = "avibkt3"  # Make sure this name is globally unique
+  bucket         = "avinlebkt"  # Make sure this name is globally unique
   force_destroy  = true      # Allows deletion even if the bucket contains objects
 
   # Tags for the bucket
