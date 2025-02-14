@@ -1,54 +1,47 @@
-provider aws {
-  region = "ap-south-1"
+"aws" {
+  region = "ap-south-1"  # Adjust your region
 }
-#Create a VPC
-resource "aws_vpc" "my_vpc" {
-  cidr_block = "10.0.0.0/16"
+
+# Define the Security Group with SSH (22) and HTTP (80) rules
+resource "aws_security_group" "my_security_group" {
+  name        = "my-security-group"
+  description = "Allow SSH and HTTP access"
+
+  # Inbound rules for SSH and HTTP
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]  # Allow SSH from any IP address
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]  # Allow HTTP from any IP address
+  }
+
+  # Outbound rule allowing all traffic
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"  # All traffic
+    cidr_blocks = ["0.0.0.0/0"]  # Allow outbound traffic to any destination
+  }
+}
+
+# Create the EC2 instance with the Security Group
+resource "aws_instance" "my_instance" {
+  ami           = "ami-00bb6a80f01f03502"  # Replace with your preferred AMI
+  instance_type = "t2.micro"
+  key_name      = "Spacelift_key"  # Use your existing key pair name here
+  security_groups = [aws_security_group.my_security_group.name]  # Associate the security group
+
   tags = {
-    Name = "my_vpc"
+    Name = "Avinashec2"
   }
-}
-
-#Private subnet
-resource "aws_subnet" "private-subnet" {
-  cidr_block = "10.0.1.0/24"
-  vpc_id     = aws_vpc.my_vpc.id
-  availability_zone       = "ap-south-1b"
-  tags = {
-    Name = "private-subnet"
+   lifecycle {
+    create_before_destroy = true
   }
-}
-
-#Public subnet
-resource "aws_subnet" "public-subnet" {
-  cidr_block              = "10.0.2.0/24"
-  vpc_id                  = aws_vpc.my_vpc.id
-  availability_zone       = "ap-south-1a"
-  map_public_ip_on_launch = true
-  tags = {
-    Name = "public-subnet"
-  }
-}
-
-#Internet gateway
-resource "aws_internet_gateway" "my-igw" {
-  vpc_id = aws_vpc.my_vpc.id
-  tags = {
-    Name = "my-igw"
-  }
-}
-
-#Routing table
-resource "aws_route_table" "my-rt" {
-  vpc_id = aws_vpc.my_vpc.id
-
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.my-igw.id
-  }
-}
-
-resource "aws_route_table_association" "public-sub" {
-  route_table_id = aws_route_table.my-rt.id
-  subnet_id      = aws_subnet.public-subnet.id
 }
